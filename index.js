@@ -28,6 +28,7 @@ async function run() {
     
     await client.connect();
     const assignmentCollection = client.db("AssignmentDB").collection("Assignment")
+    const takeAssignmentCollection = client.db("AssignmentDB").collection("takeAssignment")
     
     app.get('/assignments', async(req,res)=>{
         const cursor = assignmentCollection.find()
@@ -69,6 +70,24 @@ async function run() {
         const newAssignment= req.body;
         console.log(newAssignment);
         const result = await assignmentCollection.insertOne(newAssignment);
+        res.send(result)
+      })
+
+      app.get('/takeAssignment', async(req,res)=>{
+        console.log(req.query.email)
+        let query = {}
+        if(req.query?.email){
+          query = {email: req.query.email}
+        }
+        const result = await takeAssignmentCollection.find(query).toArray()
+        
+        res.send(result)
+      })
+
+      app.post('/takeAssignments', async(req,res)=>{
+        const newValue = req.body;
+        console.log(newValue)
+        const result = await takeAssignmentCollection.insertOne(newValue)
         res.send(result)
       })
     await client.db("admin").command({ ping: 1 });
