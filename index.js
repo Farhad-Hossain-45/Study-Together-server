@@ -73,6 +73,8 @@ async function run() {
         res.send(result)
       })
 
+      
+
       app.get('/takeAssignment', async(req,res)=>{
         console.log(req.query.email)
         let query = {}
@@ -82,6 +84,14 @@ async function run() {
         const result = await takeAssignmentCollection.find(query).toArray()
         
         res.send(result)
+      })
+
+      app.delete('/takeAssignment/:id', async(req,res)=>{
+        const id = req.params.id
+        const query = {_id : new ObjectId(id)}
+        const result = await takeAssignmentCollection.deleteOne(query)
+        res.send(result)
+
       })
 
       app.post('/takeAssignments', async(req,res)=>{
