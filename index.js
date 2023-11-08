@@ -29,17 +29,30 @@ async function run() {
     await client.connect();
     const assignmentCollection = client.db("AssignmentDB").collection("Assignment")
     const takeAssignmentCollection = client.db("AssignmentDB").collection("takeAssignment")
+    const giveAssignmentCollection = client.db("AssignmentDB").collection("giveAssignment")
     
     app.get('/assignments', async(req,res)=>{
         const cursor = assignmentCollection.find()
         const result = await cursor.toArray()
         res.send(result) 
       })
+    // app.get('/takeAssignment', async(req,res)=>{
+    //     const cursor = takeAssignmentCollection.find()
+    //     const result = await cursor.toArray()
+    //     res.send(result) 
+    //   })
 
+      
       app.get('/assignments/:id', async(req,res)=>{
         const id = req.params.id
         const query = { _id: new ObjectId(id)}
         const result = await assignmentCollection.findOne(query)
+        res.send(result)
+      })
+      app.get('/takeAssignment/:id', async(req,res)=>{
+        const id = req.params.id
+        const query = { _id: new ObjectId(id)}
+        const result = await takeAssignmentCollection.findOne(query)
         res.send(result)
       })
 
