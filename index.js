@@ -66,6 +66,20 @@ async function run() {
         
       })
 
+      app.patch('/takeAssignment/:id', async(req,res)=>{
+        const id = req.params.id
+        const filter = {_id: new ObjectId(id)}
+        const updateAssignment = req.body
+        console.log(updateAssignment)
+        const updateDoc ={
+          $set:{
+            status: updateAssignment.status
+          }
+        }
+        const result = await takeAssignmentCollection.updateOne(filter, updateDoc)
+        res.send(result)
+      })
+
     app.post('/assignments', async(req,res)=>{
         const newAssignment= req.body;
         console.log(newAssignment);
