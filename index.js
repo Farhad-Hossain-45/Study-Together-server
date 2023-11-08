@@ -96,7 +96,6 @@ async function run() {
           query = {email: req.query.email}
         }
         const result = await takeAssignmentCollection.find(query).toArray()
-        
         res.send(result)
       })
 
@@ -105,7 +104,6 @@ async function run() {
         const query = {_id : new ObjectId(id)}
         const result = await takeAssignmentCollection.deleteOne(query)
         res.send(result)
-
       })
 
       app.post('/takeAssignments', async(req,res)=>{
