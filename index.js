@@ -36,11 +36,11 @@ async function run() {
         const result = await cursor.toArray()
         res.send(result) 
       })
-    // app.get('/takeAssignment', async(req,res)=>{
-    //     const cursor = takeAssignmentCollection.find()
-    //     const result = await cursor.toArray()
-    //     res.send(result) 
-    //   })
+    app.get('/takeAssignment', async(req,res)=>{
+        const cursor = takeAssignmentCollection.find()
+        const result = await cursor.toArray()
+        res.send(result) 
+      })
 
       
       app.get('/assignments/:id', async(req,res)=>{
@@ -92,25 +92,36 @@ async function run() {
         const result = await takeAssignmentCollection.updateOne(filter, updateDoc)
         res.send(result)
       })
-
+      app.post('/takeAssignments', async(req,res)=>{
+        const newValue = req.body;
+        console.log(newValue)
+        const result = await takeAssignmentCollection.insertOne(newValue)
+        res.send(result)
+      })
     app.post('/assignments', async(req,res)=>{
         const newAssignment= req.body;
         console.log(newAssignment);
         const result = await assignmentCollection.insertOne(newAssignment);
         res.send(result)
       })
+    app.post('/giveAssignment', async(req,res)=>{
+        const value= req.body;
+        console.log(value);
+        const result = await giveAssignmentCollection.insertOne(value);
+        res.send(result)
+      })
 
       
 
-      app.get('/takeAssignment', async(req,res)=>{
-        console.log(req.query.email)
-        let query = {}
-        if(req.query?.email){
-          query = {email: req.query.email}
-        }
-        const result = await takeAssignmentCollection.find(query).toArray()
-        res.send(result)
-      })
+      // app.get('/takeAssignment', async(req,res)=>{
+      //   console.log(req.query.email)
+      //   let query = {}
+      //   if(req.query?.email){
+      //     query = {email: req.query.email}
+      //   }
+      //   const result = await takeAssignmentCollection.find(query).toArray()
+      //   res.send(result)
+      // })
 
       app.delete('/takeAssignment/:id', async(req,res)=>{
         const id = req.params.id
@@ -119,12 +130,7 @@ async function run() {
         res.send(result)
       })
 
-      app.post('/takeAssignments', async(req,res)=>{
-        const newValue = req.body;
-        console.log(newValue)
-        const result = await takeAssignmentCollection.insertOne(newValue)
-        res.send(result)
-      })
+      
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
