@@ -41,6 +41,11 @@ async function run() {
         const result = await cursor.toArray()
         res.send(result) 
       })
+    app.get('/giveAssignment', async(req,res)=>{
+        const cursor = giveAssignmentCollection.find()
+        const result = await cursor.toArray()
+        res.send(result) 
+      })
 
       
       app.get('/assignments/:id', async(req,res)=>{
@@ -49,6 +54,12 @@ async function run() {
         const result = await assignmentCollection.findOne(query)
         res.send(result)
       })
+      // app.get('/giveAssignment/:id', async(req,res)=>{
+      //   const id = req.params.id
+      //   const query = { _id: new ObjectId(id)}
+      //   const result = await giveAssignmentCollection.findOne(query)
+      //   res.send(result)
+      // })
       app.get('/takeAssignment/:id', async(req,res)=>{
         const id = req.params.id
         const query = { _id: new ObjectId(id)}
