@@ -44,6 +44,7 @@ async function run() {
     app.get('/giveAssignment', async(req,res)=>{
         const cursor = giveAssignmentCollection.find()
         const result = await cursor.toArray()
+        
         res.send(result) 
       })
 
